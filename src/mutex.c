@@ -68,6 +68,8 @@ JEMALLOC_EXPORT int	_pthread_mutex_init_calloc_cb(pthread_mutex_t *mutex,
     void *(calloc_cb)(size_t, size_t));
 #endif
 
+void fair_mutex_create(fair_mutex_t *fm);
+
 bool
 malloc_mutex_init(malloc_mutex_t *mutex)
 {
@@ -88,16 +90,7 @@ malloc_mutex_init(malloc_mutex_t *mutex)
 			return (true);
 	}
 #else
-	pthread_mutexattr_t attr;
-
-	if (pthread_mutexattr_init(&attr) != 0)
-		return (true);
-	pthread_mutexattr_settype(&attr, MALLOC_MUTEX_TYPE);
-	if (pthread_mutex_init(&mutex->lock, &attr) != 0) {
-		pthread_mutexattr_destroy(&attr);
-		return (true);
-	}
-	pthread_mutexattr_destroy(&attr);
+        fair_mutex_create(&mutex->lock);
 #endif
 	return (false);
 }
