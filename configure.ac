@@ -130,7 +130,7 @@ if test "x$CFLAGS" = "x" ; then
     JE_CFLAGS_APPEND([-std=gnu99])
     JE_CFLAGS_APPEND([-Wall])
     JE_CFLAGS_APPEND([-pipe])
-    JE_CFLAGS_APPEND([-g3])
+    JE_CFLAGS_APPEND([-g])
   elif test "x$je_cv_msvc" = "xyes" ; then
     CC="$CC -nologo"
     JE_CFLAGS_APPEND([-Zi])
